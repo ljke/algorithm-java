@@ -1,4 +1,4 @@
-package skiplist;
+package list;
 
 import java.util.Random;
 
