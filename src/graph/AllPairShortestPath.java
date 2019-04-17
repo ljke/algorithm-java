@@ -18,10 +18,18 @@ public class AllPairShortestPath {
      * Floyd算法，时间复杂度O(V^3)
      */
     public void floydWarshall(int[][] graph, int src, int dst, int v) {
-        int[] prev = new int[v];
-        Arrays.fill(prev, -1);
-
         int i, j, k;
+
+        //初始化一个前驱数组
+        int[][] prev = new int[v][v];
+        for (i = 0; i < v; i++) {
+            for (j = 0; j < v; j++) {
+                prev[i][j] = i;
+            }
+        }
+        for (i = 0; i < v; i++) {
+            prev[i][i] = -1;
+        }
 
         int[][] dist = new int[v][v];
         //初始化一个距离数组
@@ -41,11 +49,12 @@ public class AllPairShortestPath {
                     }
                     if (dist[i][k] + dist[k][j] < dist[i][j]) {
                         dist[i][j] = dist[i][k] + dist[k][j];
-                        prev[j] = k; //更新前驱结点
+                        prev[i][j] = prev[k][j]; //更新前驱数组
                     }
                 }
             }
-            printSolution(dist, v);
+//            printSolution(dist, v);
+            printSolution(prev, v);
         }
         if (dist[src][dst] == INF) {
             System.out.println("No found");
@@ -205,11 +214,17 @@ public class AllPairShortestPath {
 
     /**
      * 使用prev数组打印路径
-     *
+     * 分为两种情况，floyd算法的prev是二维数组，另外两个是一维数组
      * @param dst
      * @param prev
      */
     private void printPath(int src, int dst, int[] prev) {
+        System.out.print("path:" + src);
+        recurPrint(src, dst, prev);
+        System.out.println();
+    }
+
+    private void printPath(int src, int dst, int[][] prev){
         System.out.print("path:" + src);
         recurPrint(src, dst, prev);
         System.out.println();
@@ -224,14 +239,23 @@ public class AllPairShortestPath {
         System.out.print("->" + dst);
     }
 
+    private void recurPrint(int src, int dst, int[][] prev) {
+        if (dst != -1 && dst != src) {
+            recurPrint(src, prev[src][dst], prev);
+        } else {
+            return;
+        }
+        System.out.print("->" + dst);
+    }
+
     public static void main(String[] args) {
         //使用邻接矩阵存储图
-        int[][] graph = {{0, 5, INF, 10}, {INF, 0, 3, INF}, {INF, INF, 0, 1}, {INF, INF, INF, 0}};
+        int[][] graph = {{0, 5, INF, 1}, {INF, 0, 2, INF}, {INF, INF, 0, INF}, {INF, 2, INF, 0}};
         int v = graph.length;
         AllPairShortestPath a = new AllPairShortestPath();
-        a.floydWarshall(graph, 0, 3, v);
-        a.dijkstra(graph, 0, 3, v);
-        a.bellmanFord(graph, 0, 3, v);
+        a.floydWarshall(graph, 0, 2, v);
+        a.dijkstra(graph, 0, 2, v);
+        a.bellmanFord(graph, 0, 2, v);
     }
 
 }
