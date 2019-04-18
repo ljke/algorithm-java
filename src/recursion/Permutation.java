@@ -9,18 +9,20 @@ public class Permutation {
 
     public void fullArrangement(int[] data, int n, int k) {
         count = 0;
-        printPermutations(data, n, k);
+        printPermutations(data, n, k, n, k);
         System.out.println("Total cases:" + count);
     }
 
     /**
      * @param data store all elements used for permutation
-     * @param n    total number
+     * @param n    total element number
      * @param k    number of elements that needed to be arrange
+     * @param in   use to print, equal to initial n
+     * @param ik   use to print, equal to initial k
      */
-    public void printPermutations(int[] data, int n, int k) {
+    public void printPermutations(int[] data, int n, int k, int in, int ik) {
         if (k == 1) { // means one arrangement have finished
-            for (int i = 0; i < n; i++) {
+            for (int i = in - ik; i < in; i++) { //print last k element
                 System.out.print(data[i] + " ");
             }
             System.out.println();
@@ -28,19 +30,20 @@ public class Permutation {
             return;
         }
 
-        for (int i = 0; i < k; i++) {
-            // swap fix digit to array tail
+        for (int i = 0; i < n; i++) {
+            // swap focus digit to array tail
             int tmp = data[i];
-            data[i] = data[k - 1];
-            data[k - 1] = tmp;
+            data[i] = data[n - 1];
+            data[n - 1] = tmp;
 
             // recursive arrange other position
-            printPermutations(data, n, k - 1);
+            // k and n both need to reduce
+            printPermutations(data, n - 1, k - 1, in, ik);
 
-            // recovery swap to start next loop, change another fix digit
+            // recovery swap to start next loop, change another focus digit
             tmp = data[i];
-            data[i] = data[k - 1];
-            data[k - 1] = tmp;
+            data[i] = data[n - 1];
+            data[n - 1] = tmp;
         }
     }
 
