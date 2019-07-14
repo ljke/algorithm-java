@@ -69,10 +69,10 @@ public class QuickSort {
         int i = start;
         int j = end;
         while (i < j) {
-            while (i < j && items[i] > pivot) j--;
-            items[i] = items[j];
-            while (i < j && items[j] < pivot) i++;
-            items[j] = items[i];
+            while (i < j && items[j] > pivot) j--; //从右往左找到第一个不符合要求的j
+            items[i] = items[j]; //交换到前区
+            while (i < j && items[i] < pivot) i++; //从左往后找到第一个不符合要求的i
+            items[j] = items[i]; //交换到后区
         }
         // 相遇后i == j, 这里能保证正确是因为最后一次赋值的优先权问题，一定是另一边跟进
         items[i] = pivot;
@@ -190,7 +190,7 @@ public class QuickSort {
      *
      * @param items 待排序数组
      */
-    public void dualPivotQuickSort(int[] items){
+    public void dualPivotQuickSort(int[] items) {
         dualPivotQuickSort(items, 0, items.length - 1);
     }
 
@@ -236,11 +236,11 @@ public class QuickSort {
         int[] test = {3, -2, 1, 0, 5, -4};
         QuickSort qs = new QuickSort();
 //        qs.deScanSwapSort(test);
-//        qs.fillSort(test);
+        qs.fillSort(test);
 //        qs.forwardScanSort(test);
 //        qs.div3ScanSort(test);
 //        qs.div3DeScanSort(test);
-        qs.dualPivotQuickSort(test);
+//        qs.dualPivotQuickSort(test);
         System.out.println(Arrays.toString(test));
     }
 }
