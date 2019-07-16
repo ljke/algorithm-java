@@ -12,7 +12,7 @@ public class CircularQueue {
         this.n = n;
     }
 
-    public boolean enquue(String item){
+    public boolean enqueue(String item){
         //会空闲一个位置
         //这是必要的，否则的话无法正确判断队列满，因为head == tail可能是队列满也可能是队列空
         if((tail + 1) % n == head){
