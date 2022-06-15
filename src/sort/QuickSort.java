@@ -1,7 +1,5 @@
 package sort;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Arrays;
 
 public class QuickSort {
@@ -13,7 +11,7 @@ public class QuickSort {
      * @param i     交换下标
      * @param j     交换下标
      */
-    private void swap(@NotNull int[] items, int i, int j) {
+    private void swap(int[] items, int i, int j) {
         int tmp = items[i];
         items[i] = items[j];
         items[j] = tmp;
