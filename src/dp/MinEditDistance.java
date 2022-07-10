@@ -20,6 +20,9 @@ public class MinEditDistance {
     public int minEditDistance(char[] a, char[] b) {
         int m = a.length;
         int n = b.length;
+        if (m * n == 0) {
+            return m + n;
+        }
         int[][] dp = new int[m][n];
         // 初始化边界值
         // 第0行 a[0] 和 b[0...j] 的编辑距离
